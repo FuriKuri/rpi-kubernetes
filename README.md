@@ -73,10 +73,10 @@ NAME            STATUS    AGE
 The dashboard will be available over [http://192.168.0.200:8080/ui/](http://192.168.0.200:8080/ui/).
 
 ### Worker
-Now it's time to start the worker nodes. For this we need to connect to our RPIs 2-4.
+Now it's time to start the worker nodes. For this we need to connect to our RPIs 2-4. (repeat the following steps for the node 192.168.0.201, 192.168.0.202, 192.168.0.203)
 
 ```
-$ ssh pirate@192.168.0.200
+$ ssh pirate@192.168.0.201
 ```
 
 On the worker nodes we need to checkout the same project and use the ```worker.sh``` script. Before we execute this script, we need to set the MASTER_IP.
