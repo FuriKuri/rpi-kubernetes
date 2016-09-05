@@ -6,10 +6,10 @@
 
 ## Preparations
 ### Install OS
-I used [HypriotOS](http://blog.hypriot.com/) in version 1.0.0. For an easy installation you can use [flash](https://github.com/hypriot/flash). Just insert your SD card and run the following command from your command line.
+I used [HypriotOS](http://blog.hypriot.com/) in version 1.0.1. For an easy installation you can use [flash](https://github.com/hypriot/flash). Just insert your SD card and run the following command from your command line.
 
 ```
-$ flash --hostname moby-dock-1 https://downloads.hypriot.com/hypriotos-rpi-v1.0.0.img.zip
+$ flash --hostname moby-dock-1 https://github.com/hypriot/image-builder-rpi/releases/download/v1.0.1/hypriotos-rpi-v1.0.1.img.zip
 ```
 Repeat this for your other RPIs. Do not forget to increase the hostname.
 
