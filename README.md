@@ -100,7 +100,7 @@ NAME            STATUS    AGE
 ```
 
 ## Troubleshooting
-At the moment the cluster will not work, if the master node will be rebooted. I found no clean way to get the master node working after a reboot. The only way, which is working for me is to reinitiate the master node.
+At the moment the cluster will not work, if the master node will be rebooted. I found no clean way to get the master node working after a reboot. The only way, which is working for me, is to reinitiate the master node.
 I also have to clean ```/var/lib/kubelet``` otherwise the dashboard pod will not start again. This reinitiate only has to be done on the master node.
 
 ```
