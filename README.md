@@ -122,8 +122,10 @@ NAME            STATUS    AGE
 
 ### Watch the running pods
 
-![No running pods in default namespace](https://github.com/FuriKuri/rpi-kubernetes/raw/master/kube0.png "No running pods in default namespace")
-![Running kube-system pods](https://github.com/FuriKuri/rpi-kubernetes/raw/master/kube1.png "Running kube-system pods")
+The first image shows, that there is no pod running in the ```default``` namespace. The seconds shows the running pods in the namespace ```kube-system```.
+
+![No running pods in default namespace](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/kube0.png "No running pods in default namespace")
+![Running kube-system pods](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/kube1.png "Running kube-system pods")
 
 ### Create the first pod:
 
