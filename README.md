@@ -1,7 +1,7 @@
 # Kubernetes on Raspberry PI
 
 ## Current todos / problems
-- [x] Start first services
+- [x] Start first service
 - [ ] Start [ping-ping](https://github.com/FuriKuri/ping-pong) game
 - [ ] The cluster do not survive a reboot :(
 
