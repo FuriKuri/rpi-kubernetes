@@ -80,6 +80,18 @@ NAME            STATUS    AGE
 192.168.0.200   Ready     3m
 ```
 
+We also have to wait for specific pods, which will be started. This can take awhile, so be patient. Your master is fully ready when the following pods are running:
+
+```
+$ kubectl get pods --namespace=kube-system
+NAME                                READY     STATUS    RESTARTS   AGE
+k8s-master-192.168.0.200            4/4       Running   4          5m
+k8s-proxy-192.168.0.200             1/1       Running   0          4m
+kube-addon-manager-192.168.0.200    2/2       Running   0          2m
+kube-dns-v17.1-s3iu2                3/3       Running   0          1m
+kubernetes-dashboard-v1.1.1-km9od   1/1       Running   0          1m
+```
+
 The dashboard will be available over [http://192.168.0.200:8080/ui/](http://192.168.0.200:8080/ui/).
 
 ### Worker
@@ -104,6 +116,149 @@ NAME            STATUS    AGE
 192.168.0.201   Ready     8m
 192.168.0.202   Ready     8m
 192.168.0.203   Ready     8m
+```
+
+## First interaction
+### Create the first pod:
+
+```
+$ kubectl run hello-kube --image=furikuri/rpi-hello-kube:v1 --expose --port=3000 --labels="name=hello-kube"
+service "hello-kube" created
+deployment "hello-kube" created
+```
+
+### Check deployment
+
+```
+$ kubectl get deployments
+NAME         DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+hello-kube   1         1         1            0           21s
+```
+
+### Check pods
+
+Pod is starting...
+
+```
+$ kubectl get pods
+NAME                          READY     STATUS              RESTARTS   AGE
+hello-kube-1386070109-xi6im   0/1       ContainerCreating   0          35s
+```
+
+Pod is ready :)
+
+```
+$ kubectl get pods
+NAME                          READY     STATUS    RESTARTS   AGE
+hello-kube-1386070109-xi6im   1/1       Running   0          2m
+```
+
+### Check service / access pod (internal)
+```
+$ kubectl get services hello-kube
+NAME         CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+hello-kube   10.0.0.4     <none>        3000/TCP   3m
+```
+
+```
+$ curl http://10.0.0.4:3000
+Hello World!
+```
+
+### Check logs
+
+```
+$ kubectl logs hello-kube-1386070109-xi6im
+Received request for URL: /
+```
+
+### Check events
+
+```
+$ kubectl get events
+LASTSEEN   FIRSTSEEN   COUNT     NAME                          KIND         SUBOBJECT                     TYPE      REASON                    SOURCE                     MESSAGE
+22m        22m         1         192.168.0.200                 Node                                       Normal    Starting                  {kubelet 192.168.0.200}    Starting kubelet.
+21m        22m         29        192.168.0.200                 Node                                       Normal    NodeHasSufficientDisk     {kubelet 192.168.0.200}    Node 192.168.0.200 status is now: NodeHasSufficientDisk
+21m        22m         29        192.168.0.200                 Node                                       Normal    NodeHasSufficientMemory   {kubelet 192.168.0.200}    Node 192.168.0.200 status is now: NodeHasSufficientMemory
+21m        21m         1         192.168.0.200                 Node                                       Normal    RegisteredNode            {controllermanager }       Node 192.168.0.200 event: Registered Node 192.168.0.200 in NodeController
+7m         7m          1         192.168.0.201                 Node                                       Normal    Starting                  {kubelet 192.168.0.201}    Starting kubelet.
+7m         7m          1         192.168.0.201                 Node                                       Normal    NodeHasSufficientDisk     {kubelet 192.168.0.201}    Node 192.168.0.201 status is now: NodeHasSufficientDisk
+7m         7m          1         192.168.0.201                 Node                                       Normal    NodeHasSufficientMemory   {kubelet 192.168.0.201}    Node 192.168.0.201 status is now: NodeHasSufficientMemory
+7m         7m          1         192.168.0.201                 Node                                       Normal    RegisteredNode            {controllermanager }       Node 192.168.0.201 event: Registered Node 192.168.0.201 in NodeController
+7m         7m          1         192.168.0.201                 Node                                       Normal    NodeReady                 {kubelet 192.168.0.201}    Node 192.168.0.201 status is now: NodeReady
+7m         7m          1         192.168.0.202                 Node                                       Normal    Starting                  {kubelet 192.168.0.202}    Starting kubelet.
+7m         7m          1         192.168.0.202                 Node                                       Normal    NodeHasSufficientDisk     {kubelet 192.168.0.202}    Node 192.168.0.202 status is now: NodeHasSufficientDisk
+7m         7m          1         192.168.0.202                 Node                                       Normal    NodeHasSufficientMemory   {kubelet 192.168.0.202}    Node 192.168.0.202 status is now: NodeHasSufficientMemory
+7m         7m          1         192.168.0.202                 Node                                       Normal    RegisteredNode            {controllermanager }       Node 192.168.0.202 event: Registered Node 192.168.0.202 in NodeController
+7m         7m          1         192.168.0.202                 Node                                       Normal    NodeReady                 {kubelet 192.168.0.202}    Node 192.168.0.202 status is now: NodeReady
+7m         7m          1         192.168.0.203                 Node                                       Normal    Starting                  {kubelet 192.168.0.203}    Starting kubelet.
+7m         7m          1         192.168.0.203                 Node                                       Normal    NodeHasSufficientDisk     {kubelet 192.168.0.203}    Node 192.168.0.203 status is now: NodeHasSufficientDisk
+7m         7m          1         192.168.0.203                 Node                                       Normal    NodeHasSufficientMemory   {kubelet 192.168.0.203}    Node 192.168.0.203 status is now: NodeHasSufficientMemory
+7m         7m          1         192.168.0.203                 Node                                       Normal    RegisteredNode            {controllermanager }       Node 192.168.0.203 event: Registered Node 192.168.0.203 in NodeController
+7m         7m          1         192.168.0.203                 Node                                       Normal    NodeReady                 {kubelet 192.168.0.203}    Node 192.168.0.203 status is now: NodeReady
+4m         4m          1         hello-kube-1386070109-xi6im   Pod                                        Normal    Scheduled                 {default-scheduler }       Successfully assigned hello-kube-1386070109-xi6im to 192.168.0.201
+4m         4m          1         hello-kube-1386070109-xi6im   Pod          spec.containers{hello-kube}   Normal    Pulling                   {kubelet 192.168.0.201}    pulling image "furikuri/rpi-hello-kube:v1"
+2m         2m          1         hello-kube-1386070109-xi6im   Pod          spec.containers{hello-kube}   Normal    Pulled                    {kubelet 192.168.0.201}    Successfully pulled image "furikuri/rpi-hello-kube:v1"
+2m         2m          1         hello-kube-1386070109-xi6im   Pod          spec.containers{hello-kube}   Normal    Created                   {kubelet 192.168.0.201}    Created container with docker id 9eab2e9b4bc4
+2m         2m          1         hello-kube-1386070109-xi6im   Pod          spec.containers{hello-kube}   Normal    Started                   {kubelet 192.168.0.201}    Started container with docker id 9eab2e9b4bc4
+4m         4m          1         hello-kube-1386070109         ReplicaSet                                 Normal    SuccessfulCreate          {replicaset-controller }   Created pod: hello-kube-1386070109-xi6im
+4m         4m          1         hello-kube                    Deployment                                 Normal    ScalingReplicaSet         {deployment-controller }   Scaled up replica set hello-kube-1386070109 to 1
+22m        22m         1         moby-dock-1                   Node                                       Normal    Starting                  {kube-proxy moby-dock-1}   Starting kube-proxy.
+7m         7m          1         moby-dock-2                   Node                                       Normal    Starting                  {kube-proxy moby-dock-2}   Starting kube-proxy.
+7m         7m          1         moby-dock-3                   Node                                       Normal    Starting                  {kube-proxy moby-dock-3}   Starting kube-proxy.
+7m         7m          1         moby-dock-4                   Node                                       Normal    Starting                  {kube-proxy moby-dock-4}   Starting kube-proxy.
+
+```
+
+### Check cluster info
+
+```
+$ kubectl cluster-info
+Kubernetes master is running at http://localhost:8080
+KubeDNS is running at http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kube-dns
+kubernetes-dashboard is running at http://localhost:8080/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
+```
+### Check kubectl configuration
+
+```
+$ kubectl config view
+apiVersion: v1
+clusters: []
+contexts: []
+current-context: ""
+kind: Config
+preferences: {}
+users: []
+```
+
+### Scale pod
+```
+$ kubectl scale deployment hello-kube --replicas=3
+deployment "hello-kube" scaled
+```
+
+```
+$ kubectl get pods
+NAME                          READY     STATUS              RESTARTS   AGE
+hello-kube-1386070109-385j6   0/1       ContainerCreating   0          41s
+hello-kube-1386070109-xi6im   1/1       Running             0          7m
+hello-kube-1386070109-xwr66   0/1       ContainerCreating   0          41s
+```
+
+### Access from outside
+In generell all service are available over the master. The master proxies the service, so that they are accessible from outside.
+
+```
+# theo at toad in ~/GitProjects/rpi-kubernetes on git:master ● [16:08:14]
+→ curl -L http://192.168.0.200:8080/api/v1/proxy/namespaces/default/services/hello-kube
+Hello World!
+```
+
+### Cleanup
+```
+$ kubectl delete service,deployment hello-kube
 ```
 
 ## Troubleshooting
