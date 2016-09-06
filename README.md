@@ -152,6 +152,7 @@ $ kubectl get pods
 NAME                          READY     STATUS              RESTARTS   AGE
 hello-kube-1386070109-xi6im   0/1       ContainerCreating   0          35s
 ```
+![Starting pod](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/service-start.png "Starting pod")
 
 Pod is ready :)
 
@@ -160,6 +161,7 @@ $ kubectl get pods
 NAME                          READY     STATUS    RESTARTS   AGE
 hello-kube-1386070109-xi6im   1/1       Running   0          2m
 ```
+![Running pod](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/service-running.png "Running pod")
 
 ### Check service / access pod (internal)
 ```
@@ -246,6 +248,7 @@ users: []
 $ kubectl scale deployment hello-kube --replicas=3
 deployment "hello-kube" scaled
 ```
+![Scale service](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/service-scale.png "[Scale service")
 
 ```
 $ kubectl get pods
