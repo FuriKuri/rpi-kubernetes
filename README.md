@@ -1,7 +1,8 @@
 # Kubernetes on Raspberry PI
 
 ## Current todos / problems
-- [ ] Start first services
+- [x] Start first services
+- [ ] Start [ping-ping](https://github.com/FuriKuri/ping-pong) game
 - [ ] The cluster do not survive a reboot :(
 
 ## Preparations
@@ -119,6 +120,8 @@ NAME            STATUS    AGE
 ```
 
 ## First interaction
+
+For the following step, I used a simple hello world http server: [rpi-hello-kube](https://github.com/FuriKuri/rpi-hello-kube)
 
 ### Watch the running pods
 
