@@ -5,6 +5,17 @@
 - [x] Start [ping-ping](https://github.com/FuriKuri/ping-pong) game
 - [ ] The cluster do not survive a reboot :(
 
+## Hardware
+
+* 4 x Raspberry Pi 3 Model B [link](https://www.amazon.de/gp/product/B01CEFWQFA)
+* 3 x Intermediate Stacking Plate [link](https://www.amazon.de/gp/product/B00NB1WQZW)
+* 1 x Raspberry Pi case [link](https://www.amazon.de/gp/product/B00NB1WPEE)
+* 1 x LAN cable 0,25m [5-pack] [link](https://www.amazon.de/gp/product/B01AXPQZPA)
+* 4 x SD card [link](https://www.amazon.de/gp/product/B013UDL5RU)
+* 1 x PowerPort 6 [link](https://www.amazon.de/gp/product/B00PTLSH9G)
+* 1 x Micro USB cable [4-pack] [link](https://www.amazon.de/gp/product/B016BEVNK4)
+* 1 x USB Powered Switch [link](https://www.amazon.de/gp/product/B003CLIOMU)
+
 ## Preparations
 ### Install OS
 I used [HypriotOS](http://blog.hypriot.com/) in version 1.0.1. For an easy installation you can use [flash](https://github.com/hypriot/flash). Just insert your SD card and run the following command from your command line.
