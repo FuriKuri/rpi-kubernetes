@@ -273,7 +273,94 @@ Hello World!
 ### Cleanup
 ```
 $ kubectl delete service,deployment hello-kube
+service "hello-kube" deleted
+deployment "hello-kube" deleted
 ```
+
+## The ping pong game
+For this I created a simple application written in Go. This application is a simplified version of ping pong. We will start three services. Two services will be the client named ```ping``` and ```pong```. Both clients can be request over HTTP and they will return HIT or MISS, according as whether he hits the ball or not. The ```ping-pong-table``` will request both clients until one of them returns MISS.
+
+### Start pods
+For our ping pong game, we need to start 3 services, ```ping```, ```pong``` and ```ping-pong-table```. For all services, the image ```furikuri/rpi-ping-pong:latest``` can be used.
+```
+# ping client
+$ kubectl run ping --expose --port=3000 --labels="name=ping" --image=furikuri/rpi-ping-pong:latest -- --hit-chance 85
+
+# pong client
+$ kubectl run pong --expose --port=3000 --labels="name=pong" --image=furikuri/rpi-ping-pong:latest -- --hit-chance 85
+
+# ping pong server
+$ kubectl run ping-pong-table --expose --port=3000 --labels="name=ping-pong-table" --image=furikuri/rpi-ping-pong:latest -- --mode server
+```
+
+Check with ```get pods``` if all needed pods are up.
+
+```
+$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+ping-1834401500-e5pg4               1/1       Running   0          18m
+ping-pong-table-4157982753-79a57    1/1       Running   0          5m
+pong-2947596008-0tmmw               1/1       Running   0          12m
+```
+
+### Usage
+For internal usage, you can use the service IP from our ```ping-pong-table```.
+```
+$ kubectl get service ping-pong-table
+NAME               CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+ping-pong-table    10.0.0.179   <none>        3000/TCP   5m
+
+$ curl http://10.0.0.179:3000
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> MISS
+The winner is PONG
+```
+
+For external use, just use the master proxy:
+
+```
+# theo at toad in ~/GitProjects/rpi-kubernetes on git:master ✖︎ [18:02:02]
+→ curl http://192.168.0.200:8080/api/v1/proxy/namespaces/default/services/ping-pong-table/
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> HIT
+PING --> HIT
+PONG --> MISS
+The winner is PING
+```
+
+### View logs
+```
+$ kubectl logs ping-pong-table-4157982753-79a57
+2016/09/06 16:02:03 Start game
+2016/09/06 16:02:03 PING --> HIT
+2016/09/06 16:02:03 PONG --> HIT
+2016/09/06 16:02:03 PING --> HIT
+2016/09/06 16:02:03 PONG --> HIT
+2016/09/06 16:02:03 PING --> HIT
+2016/09/06 16:02:03 PONG --> HIT
+2016/09/06 16:02:03 PING --> HIT
+2016/09/06 16:02:03 PONG --> HIT
+2016/09/06 16:02:03 PING --> HIT
+2016/09/06 16:02:03 PONG --> MISS
+2016/09/06 16:02:03 The winner is PING
+2016/09/06 16:02:03 End game
+```
+
 
 ## Troubleshooting
 At the moment the cluster will not work, if the master node will be rebooted. I found no clean way to get the master node working after a reboot. The only way, which is working for me, is to reinitiate the master node.
