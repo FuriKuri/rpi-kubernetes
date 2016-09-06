@@ -297,10 +297,10 @@ Check with ```get pods``` if all needed pods are up.
 
 ```
 $ kubectl get pods
-NAME                                READY     STATUS    RESTARTS   AGE
-ping-1834401500-e5pg4               1/1       Running   0          18m
-ping-pong-table-4157982753-79a57    1/1       Running   0          5m
-pong-2947596008-0tmmw               1/1       Running   0          12m
+NAME                              READY     STATUS    RESTARTS   AGE
+ping-1834401500-0g10a             1/1       Running   0          9s
+ping-pong-table-943113987-vxmtd   1/1       Running   0          8s
+pong-2947596008-yocod             1/1       Running   0          9s
 ```
 
 ![Ping pong](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/ping-pong.png "Ping pong")
@@ -347,7 +347,7 @@ The winner is PING
 
 ### View logs
 ```
-$ kubectl logs ping-pong-table-4157982753-79a57
+$ kubectl logs ping-pong-table-943113987-vxmtd
 2016/09/06 16:02:03 Start game
 2016/09/06 16:02:03 PING --> HIT
 2016/09/06 16:02:03 PONG --> HIT
