@@ -2,7 +2,7 @@
 
 ## Current todos / problems
 - [x] Start first service
-- [ ] Start [ping-ping](https://github.com/FuriKuri/ping-pong) game
+- [x] Start [ping-ping](https://github.com/FuriKuri/ping-pong) game
 - [ ] The cluster do not survive a reboot :(
 
 ## Preparations
