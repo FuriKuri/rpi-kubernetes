@@ -303,6 +303,8 @@ ping-pong-table-4157982753-79a57    1/1       Running   0          5m
 pong-2947596008-0tmmw               1/1       Running   0          12m
 ```
 
+![Ping pong](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/ping-pong.png "Ping pong")
+
 ### Usage
 For internal usage, you can use the service IP from our ```ping-pong-table```.
 ```
