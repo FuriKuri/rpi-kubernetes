@@ -1,4 +1,5 @@
 # Kubernetes on Raspberry PI
+![The kube cluster](https://github.com/FuriKuri/rpi-kubernetes/raw/master/img/live.jpg "The kube cluster")
 
 ## Current todos / problems
 - [x] Start first service
