@@ -284,10 +284,14 @@ Hello World!
 
 ### Update deployment image
 
+With ```kubectl set image``` for a deployment a new image can be set.
+
 ```
 $ kubectl set image deployment/hello-kube hello-kube=furikuri/rpi-hello-kube:v2
 deployment "hello-kube" image updated
 ```
+
+After with command the new image will be roll out.
 
 ```
 $ kubectl get pods
@@ -299,6 +303,8 @@ hello-kube-1467465822-9y4el   0/1       ContainerCreating   0          1s
 hello-kube-1467465822-g6mg2   1/1       Running             0          5s
 hello-kube-1467465822-xbyl5   0/1       ContainerCreating   0          4s
 ```
+
+For more information, how the image will be roll out, ```kubectl describe deployments``` shows the ```RollingUpdateStrategy``` for each deployment.
 
 ```
 $ kubectl describe deployments
