@@ -43,7 +43,7 @@ $ ssh pirate@192.168.0.200
 ### Generell setup for all nodes (master and worker)
 To create the kubernetes cluster, I use [kubernetes-on-arm](https://github.com/luxas/kubernetes-on-arm). In the first setup I used [kube-deploy](https://github.com/kubernetes/kube-deploy), but kubernetes-on-arm is more comfortable. It installs kbuectl and offers some kubernetes addons. Btw, kubernetes-on-arm uses kube-deploy to create the cluster.
 
-First, connect to your first RPI over ssh (use **priate** as username and **hypriot** as password)
+First, connect to your first RPI over ssh (use **pirate** as username and **hypriot** as password)
 
 ```
 $ ssh pirate@192.168.0.200
