@@ -282,6 +282,50 @@ In generell all service are available over the master. The master proxies the se
 Hello World!
 ```
 
+### Update deployment image
+
+```
+$ kubectl set image deployment/hello-kube hello-kube=furikuri/rpi-hello-kube:v2
+deployment "hello-kube" image updated
+```
+
+```
+$ kubectl get pods
+NAME                          READY     STATUS              RESTARTS   AGE
+hello-kube-1386070109-6ct6f   1/1       Running             0          5m
+hello-kube-1386070109-6zkhk   1/1       Terminating         0          4m
+hello-kube-1386070109-p1646   1/1       Terminating         0          4m
+hello-kube-1467465822-9y4el   0/1       ContainerCreating   0          1s
+hello-kube-1467465822-g6mg2   1/1       Running             0          5s
+hello-kube-1467465822-xbyl5   0/1       ContainerCreating   0          4s
+```
+
+```
+$ kubectl describe deployments
+Name:			hello-kube
+Namespace:		default
+CreationTimestamp:	Sun, 18 Sep 2016 09:59:29 +0200
+Labels:			name=hello-kube
+Selector:		name=hello-kube
+Replicas:		3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:		RollingUpdate
+MinReadySeconds:	0
+RollingUpdateStrategy:	1 max unavailable, 1 max surge
+OldReplicaSets:		<none>
+NewReplicaSet:		hello-kube-1467465822 (3/3 replicas created)
+Events:
+  FirstSeen	LastSeen	Count	From				SubobjectPath	Type		Reason			Message
+  ---------	--------	-----	----				-------------	--------	------			-------
+  18m		18m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled up replica set hello-kube-1386070109 to 1
+  16m		16m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled up replica set hello-kube-1386070109 to 3
+  12m		12m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled up replica set hello-kube-1467465822 to 1
+  12m		12m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled down replica set hello-kube-1386070109 to 2
+  12m		12m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled up replica set hello-kube-1467465822 to 2
+  12m		12m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled down replica set hello-kube-1386070109 to 1
+  12m		12m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled up replica set hello-kube-1467465822 to 3
+  12m		12m		1	{deployment-controller }			Normal		ScalingReplicaSet	Scaled down replica set hello-kube-1386070109 to 0
+```
+
 ### Cleanup
 ```
 $ kubectl delete service,deployment hello-kube
