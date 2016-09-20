@@ -429,3 +429,10 @@ $ kubectl logs ping-pong-table-943113987-vxmtd
 ## Troubleshooting
 At the moment the cluster will not work, if the master node will be rebooted. I found no clean way to get the master node working after a reboot. The only way, which is working for me, is to reinitiate the master node.
 I also have to clean ```/var/lib/kubelet``` otherwise the dashboard pod will not start again. This reinitiate only has to be done on the master node. Just run ```sudo kube-config disable``` and ```sudo kube-config enable-master``` and hope everything will work after this ;-)
+
+## Useful links
+* [Kubernetes documentation](http://kubernetes.io/docs/)
+* [kubernetes-on-arm](https://github.com/luxas/kubernetes-on-arm)
+* [Deployments](http://kubernetes.io/docs/user-guide/deployments/)
+* [Replica Sets](http://kubernetes.io/docs/user-guide/replicasets/)
+* [Services](http://kubernetes.io/docs/user-guide/services/)
